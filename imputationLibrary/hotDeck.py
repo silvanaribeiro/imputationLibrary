@@ -6,10 +6,9 @@ def euclideanDistance(dot_missing, df, axis=1):
     return np.sqrt(np.sum(np.power(np.subtract(dot_missing, df),2), axis=axis))
 
 def sortByDistance(dict_df):
-    return {k: v for k, v in sorted(dict_df.items(), key=lambda x: x[1])}
+    return {k: v for k, v in sorted(dict_df.items(), key=lambda x: x[0])}
     
-def inputTrainingData(training_df, use_rand=True):
-    #print(training_df)
+def inputData(training_df, use_rand=True):
     for index, row in training_df.iterrows():
         if (len(row)-row.count())>=1:
             row_reshaped=row.to_numpy().reshape(1, row.shape[0])
@@ -25,3 +24,8 @@ def inputTrainingData(training_df, use_rand=True):
     return training_df
             
 
+def inputTrainingData(training_df):
+    return inputData(training_df)
+
+def inputTestData(test_df):
+    return inputData(test_df)

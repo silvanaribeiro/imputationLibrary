@@ -16,10 +16,16 @@ def test_sortByDistance():
     dict_after = {1:'b', 2:'d', 3:'a', 4:'c'}
     assert hotDeck.sortByDistance(dict_before) == dict_after
 
-def test_inputTrainingData():
-    df_before = pd.DataFrame([[1,1,1,np.nan,0,0,0], [1,1,1,1,0,0,0], [0,0,0,0,0,0,0]])
-    df_after = pd.DataFrame([[1,1,1,1.0,0,0,0], [1,1,1,1.0,0,0,0], [0,0,0,0,0,0,0]])
-    #print(df_before)
-    result = hotDeck.inputTrainingData(df_before, use_rand = False)
+def test_inputData():
+    #df_before = pd.DataFrame([[1,1,1,np.nan,0,0,0], [1,1,1,1,0,0,0], [0,0,0,0,0,0,0]])
+    #df_after = pd.DataFrame([[1,1,1,1.0,0,0,0], [1,1,1,1.0,0,0,0], [0,0,0,0,0,0,0]])
+    #result = hotDeck.inputData(df_before, use_rand = False)
+    #print(result)
+    #assert result.equals(df_after)
+
+
+    df_before = pd.DataFrame([[1,1,1,np.nan,0,0,0], [1,1,1,1,0,0,0], [np.nan,0,0,0,0,0,0], [0,0,0,0,0,0,0]])
+    df_after = pd.DataFrame([[1,1,1,1.0,0,0,0], [1,1,1,1.0,0,0,0], [0.0,0,0,0,0,0,0], [0.0,0,0,0,0,0,0]])
+    result = hotDeck.inputData(df_before, use_rand = False)
     print(result)
     assert result.equals(df_after)
