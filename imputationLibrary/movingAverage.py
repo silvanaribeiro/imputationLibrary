@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-#import imputationLibrary.util
 
 def inputTrainingData(df_to_input, num_values):
     for index, row in df_to_input.iterrows():
@@ -28,16 +27,14 @@ def inputTrainingData(df_to_input, num_values):
             df_to_input.at[index, df_to_input.columns[0]]  = mean
     return df_to_input
 
-def inputTestData(training_df, test_df, num_values, ignore_index=True):
-    df = pd.concat([training_df,test_df], ignore_index = ignore_index)
-    complete_df = inputTrainingData(df, num_values)
-    complete_df = complete_df.iloc[-test_df.shape[0]:]
-    if ignore_index:
-        complete_df = complete_df.reset_index()
-        complete_df = complete_df[:][0]
-    return complete_df
+def inputTestData(training_df, test_df, num_values, ignore_index=False):
+    for index, row in test_df.iterrows():
+        training_df = training_df.append(row, ignore_index=ignore_index)
+        if (len(row)-row.count())>=1:
+            training_df = inputTrainingData(training_df, num_values)
+    return training_df[-test_df.shape[0]:]
 
-def input(training_df, test_df, num_values, ignore_index=True):
+def input(training_df, test_df, num_values, ignore_index=False):
     training_complete = inputTrainingData(training_df, num_values)
     test_complete = inputTestData(training_complete, test_df, num_values, ignore_index)
 

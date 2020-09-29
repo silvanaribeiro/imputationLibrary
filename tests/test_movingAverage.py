@@ -10,6 +10,8 @@ def test_inputTrainingData():
 def test_inputTestData():
     df_train = pd.DataFrame([0.5, 1, 0, 0.5, 1, 0, 0, 0])
     df_test = pd.DataFrame([np.nan, 1, 1, np.nan, 1, 1, 0, 0])
-    df_after = pd.DataFrame([0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0])
+    df_after = pd.DataFrame([0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0])
     df_after = df_after[:][0]
-    assert df_after.equals(movingAverage.inputTestData(df_train, df_test, 2))
+    result = movingAverage.inputTestData(df_train, df_test, 2, ignore_index = True)
+    result = result.reset_index()
+    assert df_after.equals(result[:][0])
