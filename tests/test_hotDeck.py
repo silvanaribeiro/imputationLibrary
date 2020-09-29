@@ -17,11 +17,10 @@ def test_sortByDistance():
     assert hotDeck.sortByDistance(dict_before) == dict_after
 
 def test_inputData():
-    #df_before = pd.DataFrame([[1,1,1,np.nan,0,0,0], [1,1,1,1,0,0,0], [0,0,0,0,0,0,0]])
-    #df_after = pd.DataFrame([[1,1,1,1.0,0,0,0], [1,1,1,1.0,0,0,0], [0,0,0,0,0,0,0]])
-    #result = hotDeck.inputData(df_before, use_rand = False)
-    #print(result)
-    #assert result.equals(df_after)
+    df_before = pd.DataFrame([[1,1,1,np.nan,0,0,0], [1,1,1,1,0,0,0], [0,0,0,0,0,0,0]])
+    df_after = pd.DataFrame([[1,1,1,1.0,0,0,0], [1,1,1,1.0,0,0,0], [0,0,0,0,0,0,0]])
+    result = hotDeck.inputData(df_before, use_rand = False)
+    assert result.equals(df_after)
 
 
     df_before = pd.DataFrame([[1,1,1,np.nan,0,0,0], [1,1,1,1,0,0,0], [np.nan,0,0,0,0,0,0], [0,0,0,0,0,0,0]])
