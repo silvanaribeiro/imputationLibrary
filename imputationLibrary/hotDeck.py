@@ -27,5 +27,9 @@ def inputData(training_df, use_rand=True):
 def inputTrainingData(training_df):
     return inputData(training_df)
 
-def inputTestData(test_df):
-    return inputData(test_df)
+def inputTestData(test_df, training_df):
+    for index, row in test_df.iterrows():
+        training_df = training_df.append(row, ignore_index=ignore_index)
+        if (len(row)-row.count())>=1:
+            training_df = inputData(training_df, num_values)
+    return training_df[-test_df.shape[0]:]
