@@ -32,3 +32,14 @@ def test_inputTrainingData():
     result = pd.DataFrame([[1,1,1,0.5,0,0,0], [1,1,1,1,0,0,3.8666666667]])
     result=result.T
     assert np.isclose(result, training_df_imputed, rtol=1e-08, atol=1e-08).all() == True
+
+    
+def test_inputTestData():
+    training_df = pd.DataFrame([[1,1,1,1,0,0,0], [1,1,1,1,0,0,0]])
+    training_df=training_df.T
+    test_df = pd.DataFrame([[1,1,1,np.nan,0,0,0], [1,1,1,1,0,0,np.nan]])
+    test_df=test_df.T
+    result  = pd.DataFrame([[1,1,1,3.077637,0,0,0], [1,1,1,1,0,0,3.835675]])
+    result = result.T
+    test_df_imputed = splineInterpolation.inputTestData(test_df, training_df, ignore_index=True)
+    assert np.isclose(result, test_df_imputed, rtol=1e-05, atol=1e-05).all() == True
