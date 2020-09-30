@@ -5,7 +5,6 @@ from imputationLibrary import forwardFilling
 def test_inputTrainingData():
     df_before = pd.DataFrame([1.0, 1, 2, np.nan, 0, 0, 0, 0])
     df_after = pd.DataFrame([1.0, 1.0, 2.0, 2.0, 0.0, 0.0, 0.0,0.0])
-    print(forwardFilling.inputTrainingData(df_before))
     assert df_after.equals(forwardFilling.inputTrainingData(df_before))
 
 def test_inputTestData():

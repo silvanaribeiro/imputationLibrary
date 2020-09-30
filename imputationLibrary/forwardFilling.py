@@ -11,4 +11,4 @@ def inputTestData(test_df, training_df, ignore_index=False):
     return training_df[-test_df.shape[0]:]
 
 def input(df_training, df_test):
-    return inputTrainingData(df_training), inputTestData(df_test)
+    return inputTrainingData(df_training), inputTestData(df_test, df_training)

@@ -21,6 +21,6 @@ def inputTrainingData(training_df):
     return inputData(training_df)
 
 def input(training_df, test_df):
-    df_training, imp = inputTrainingData(training_df)
-    df_test = inputTestData(test_df, imp)
+    df_training = inputTrainingData(training_df)
+    df_test = inputTestData(test_df, training_df)
     return df_training, df_test

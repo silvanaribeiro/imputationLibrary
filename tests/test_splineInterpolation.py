@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 from imputationLibrary import splineInterpolation
-import matplotlib.pyplot as plt
 
 def test_inputData():
     x = np.arange(0, 2*np.pi, np.pi/2)

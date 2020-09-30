@@ -2,8 +2,9 @@ from setuptools import find_packages, setup
 
 setup(
     name='imputationLibrary',
-    packages=find_packages(include=['imputationLibrary']),
-    version='0.0.1',
+    packages=find_packages(),
+    include_package_data=True,
+    version='0.0.26',
     description='Imputation Library for time series Data.',
     author='Silvana Mara Ribeiro',
     license='GNU 3',

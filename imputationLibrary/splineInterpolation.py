@@ -22,3 +22,8 @@ def inputTestData(test_df, training_df, ignore_index=False):
         if (len(row)-row.count())>=1:
             training_df = inputTrainingData(training_df)
     return training_df[-test_df.shape[0]:]
+
+def input(training_df, test_df):
+    df_training = inputTrainingData(training_df)
+    df_test = inputTestData(test_df, training_df)
+    return df_training, df_test

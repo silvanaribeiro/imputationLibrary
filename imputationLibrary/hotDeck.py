@@ -22,14 +22,16 @@ def inputData(training_df, use_rand=True):
             for col in nan_columns[0][1:]:
                 training_df.at[index, col] = training_df[col][sorted_dict[list(sorted_dict)[rand_pos-1]]]
     return training_df
-            
 
 def inputTrainingData(training_df):
     return inputData(training_df)
 
-def inputTestData(test_df, training_df):
+def inputTestData(test_df, training_df, ignore_index=False):
     for index, row in test_df.iterrows():
         training_df = training_df.append(row, ignore_index=ignore_index)
         if (len(row)-row.count())>=1:
-            training_df = inputData(training_df, num_values)
+            training_df = inputData(training_df)
     return training_df[-test_df.shape[0]:]
+
+def input(df_training, df_test):
+    return inputTrainingData(df_training), inputTestData(df_test, df_training)
