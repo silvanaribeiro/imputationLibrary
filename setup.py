@@ -4,7 +4,7 @@ setup(
     name='imputationLibrary',
     packages=find_packages(),
     include_package_data=True,
-    version='0.0.26',
+    version='0.0.46',
     description='Imputation Library for time series Data.',
     author='Silvana Mara Ribeiro',
     license='GNU 3',

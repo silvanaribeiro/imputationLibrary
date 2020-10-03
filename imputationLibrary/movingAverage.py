@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
 
-def inputTrainingData(df_to_input, num_values):
+def inputTrainingData(training_df, num_values):
+    df_to_input = training_df.copy()
     for index, row in df_to_input.iterrows():
         if pd.isna(row[0]):
             count_prev = 0
@@ -28,11 +29,12 @@ def inputTrainingData(df_to_input, num_values):
     return df_to_input
 
 def inputTestData(training_df, test_df, num_values, ignore_index=False):
+    df_to_input = training_df.copy()
     for index, row in test_df.iterrows():
-        training_df = training_df.append(row, ignore_index=ignore_index)
+        df_to_input = df_to_input.append(row, ignore_index=ignore_index)
         if (len(row)-row.count())>=1:
-            training_df = inputTrainingData(training_df, num_values)
-    return training_df[-test_df.shape[0]:]
+            df_to_input = inputTrainingData(df_to_input, num_values)
+    return df_to_input[-test_df.shape[0]:]
 
 def input(training_df, test_df, num_values, ignore_index=False):
     training_complete = inputTrainingData(training_df, num_values)

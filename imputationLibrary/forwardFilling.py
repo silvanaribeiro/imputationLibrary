@@ -1,7 +1,10 @@
 import pandas as pd
 
 def inputTrainingData(df):
-    return df.ffill()
+    df = df.ffill()
+    if df.isnull().values.any():
+        df = df.bfill()
+    return df
 
 def inputTestData(test_df, training_df, ignore_index=False):
     for index, row in test_df.iterrows():
