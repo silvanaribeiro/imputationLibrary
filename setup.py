@@ -13,9 +13,10 @@ setup(
         'numpy==1.19.1',
         'pandas==0.24.2',
         'scikit-learn==0.23.1',
-        'scipy==1.5.2',
+        'scipy==1.5.3',
         'seaborn==0.9.0',
-        'xgboost==1.1.1',
+        'statsmodels==0.12.1',
+        
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
