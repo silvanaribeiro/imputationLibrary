@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from random import gauss
 from datetime import datetime
+import random
 
 
 def generate_white_noise():
@@ -11,82 +12,135 @@ def generate_white_noise():
     white_noise = pd.DataFrame(white_noise, index=datelist)
     return white_noise.iloc[:,0]
 
-def generate_seasonal():
+def generate_seasonal(k = 1, p = 1, k_w=1):
     white_noise = generate_white_noise()
     xlim = 100
     x = np.arange(0, xlim, 0.1)
-    y = np.sin(x)*10
-    #y = np.sin(x)*13
-    seasonal = y + white_noise
+    y = np.sin(p*x)*k
+    seasonal = y + white_noise*k_w
     return seasonal
 
-def generate_trended():
+def generate_trended(k=1, k_w=1):
     white_noise = generate_white_noise()
     xlim = 100
     x = np.arange(0, xlim, 0.1)
-    trend = x + white_noise
-    #trend = 30*x + white_noise
+    trend =k*x + k_w*white_noise
     return trend
 
-def generate_trend_and_seasonal():
+def generate_trended2(k=1, k_w=1):
+    white_noise = generate_white_noise()
+    xlim = 50
+    x = np.arange(0, xlim, 0.1)
+    x2 = np.flip(x)
+    x = np.append(x,x2)
+    trend = k*x + k_w*white_noise
+    return trend
+
+def generate_trend_and_seasonal(k_s=1, k_t=1, p=1, k_w=1):
     white_noise = generate_white_noise()
     xlim = 100
     x = np.arange(0, xlim, 0.1)
-    y = np.sin(x)*10
-    seasonal_and_trend = y + white_noise*3 + x
-    #y = np.sin(x)*13
-    #seasonal_and_trend = 30*y + white_noise*7 + x
+    y = np.sin(p*x)*k_s
+    seasonal_and_trend = y + k_w*white_noise + x*k_t
     return seasonal_and_trend
 
 def test_isWhiteNoise():
-    white_noise = generate_white_noise()
-    assert True == nature.isWhiteNoise(white_noise)
+    lower_bound = -100
+    upper_bound = 100
+    for i in range(0,10):
 
-    seasonal = generate_seasonal()
-    assert False == nature.isWhiteNoise(seasonal)
+        k_s = random.randint(lower_bound, upper_bound)
+        k_t = random.randint(lower_bound, upper_bound)
+        k_w = random.randint(lower_bound, upper_bound)
+        p = random.randint(lower_bound, upper_bound)
+        
+        white_noise = generate_white_noise()
+        assert True == nature.isWhiteNoise(white_noise)
 
-    trend = generate_trended()
-    assert False == nature.isWhiteNoise(trend)
+        seasonal = generate_seasonal(k_s, p, k_w)
+        assert False == nature.isWhiteNoise(seasonal)
 
-    trend_and_seasonal = generate_trend_and_seasonal()
-    assert False == nature.isWhiteNoise(trend_and_seasonal)
+        trend = generate_trended(k_t, k_w)
+        assert False == nature.isWhiteNoise(trend)
+
+        trend = generate_trended2(k_t, k_w)
+        assert False == nature.isWhiteNoise(trend)
+
+        trend_and_seasonal = generate_trend_and_seasonal(k_s, k_t, p, k_w)
+        assert False == nature.isWhiteNoise(trend_and_seasonal)
 
 def test_isSeasonal():
-    white_noise = generate_white_noise()
-    assert False == nature.isSeasonal(white_noise)
+    lower_bound = -100
+    upper_bound = 100
+    for i in range(0,10):
 
-    seasonal = generate_seasonal()
-    assert True == nature.isSeasonal(seasonal)
+        k_s = random.randint(lower_bound, upper_bound)
+        k_t = random.randint(lower_bound, upper_bound)
+        k_w = random.randint(lower_bound, upper_bound)
+        p = random.randint(lower_bound, upper_bound)
+        
+        white_noise = generate_white_noise()
+        assert False == nature.isWhiteNoise(white_noise)
 
-    trend = generate_trended()
-    assert False == nature.isSeasonal(trend)
+        seasonal = generate_seasonal(k_s, p, k_w)
+        assert True == nature.isWhiteNoise(seasonal)
 
-    trend_and_seasonal = generate_trend_and_seasonal()
-    assert True == nature.isSeasonal(trend_and_seasonal)
+        trend = generate_trended(k_t, k_w)
+        assert False == nature.isWhiteNoise(trend)
+
+        trend = generate_trended2(k_t, k_w)
+        assert False == nature.isWhiteNoise(trend)
+
+        trend_and_seasonal = generate_trend_and_seasonal(k_s, k_t, p, k_w)
+        assert True == nature.isWhiteNoise(trend_and_seasonal)
 
 
 def test_isTrended():
-    white_noise = generate_white_noise()
-    assert False == nature.isTrended(white_noise)
+    lower_bound = -100
+    upper_bound = 100
+    for i in range(0,10):
 
-    seasonal = generate_seasonal()
-    assert False == nature.isTrended(seasonal)
+        k_s = random.randint(lower_bound, upper_bound)
+        k_t = random.randint(lower_bound, upper_bound)
+        k_w = random.randint(lower_bound, upper_bound)
+        p = random.randint(lower_bound, upper_bound)
+        
+        white_noise = generate_white_noise()
+        assert False == nature.isWhiteNoise(white_noise)
 
-    trend = generate_trended()
-    assert True == nature.isTrended(trend)
+        seasonal = generate_seasonal(k_s, p, k_w)
+        assert False == nature.isWhiteNoise(seasonal)
 
-    trend_and_seasonal = generate_trend_and_seasonal()
-    assert True == nature.isTrended(trend_and_seasonal)
+        trend = generate_trended(k_t, k_w)
+        assert True == nature.isWhiteNoise(trend)
+
+        trend = generate_trended2(k_t, k_w)
+        assert False == nature.isWhiteNoise(trend)
+
+        trend_and_seasonal = generate_trend_and_seasonal(k_s, k_t, p, k_w)
+        assert True == nature.isWhiteNoise(trend_and_seasonal)
+
 
 def test_isTrendedAndSeasonal():
-    white_noise = generate_white_noise()
-    assert False == nature.isTrendedAndSeasonal(white_noise)
+    lower_bound = -100
+    upper_bound = 100
+    for i in range(0,10):
 
-    seasonal = generate_seasonal()
-    assert False == nature.isTrendedAndSeasonal(seasonal)
+        k_s = random.randint(lower_bound, upper_bound)
+        k_t = random.randint(lower_bound, upper_bound)
+        k_w = random.randint(lower_bound, upper_bound)
+        p = random.randint(lower_bound, upper_bound)
+        white_noise = generate_white_noise()
+        assert False == nature.isWhiteNoise(white_noise)
 
-    trend = generate_trended()
-    assert False == nature.isTrendedAndSeasonal(trend)
+        seasonal = generate_seasonal(k_s, p, k_w)
+        assert False == nature.isWhiteNoise(seasonal)
 
-    trend_and_seasonal = generate_trend_and_seasonal()
-    assert True == nature.isTrendedAndSeasonal(trend_and_seasonal)
+        trend = generate_trended(k_t, k_w)
+        assert False == nature.isWhiteNoise(trend)
+        
+        trend = generate_trended2(k_t, k_w)
+        assert False == nature.isWhiteNoise(trend)
+
+        trend_and_seasonal = generate_trend_and_seasonal(k_s, k_t, p, k_w)
+        assert True == nature.isWhiteNoise(trend_and_seasonal)
