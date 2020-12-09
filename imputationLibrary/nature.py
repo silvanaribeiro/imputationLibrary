@@ -19,22 +19,37 @@ def isWhiteNoise(ts):
     return count <= (0.05*len(ts)*2)
 
 def isSeasonal(ts):
-    if not isWhiteNoise(ts):
-        normalized = preprocessing.scale(np.array(ts.fillna(0)))
-        normalized = pd.DataFrame(normalized, index = ts.index)
-        result = decompose.decompose(ts)
-        corr = signal.correlate(result.trend, result.trend, mode='full')
-        corr = corr/len(ts)
-        peaks, info = find_peaks(corr, height=2/np.sqrt(len(ts)))
-        peaks = peaks.tolist()
-        if len(peaks) < 2:
-            return(False)
-        first_value = peaks[1]-peaks[0]
-        for i in range(0, len(peaks)-1):
-            if peaks[i+1]-peaks[i] > first_value + 2 or peaks[i+1]-peaks[i] < first_value - 2:
-                return(False)
-        return(True)
-    return(False)
+    count_outside_bounderies = 0
+    if isWhiteNoise(ts):
+        #print('é white noise')
+        return False
+    normalized = preprocessing.scale(np.array(ts.fillna(0)))
+    corr = signal.correlate(normalized, normalized, mode='full')
+    corr = corr/len(ts)
+    corr = pd.DataFrame(corr)
+    corr = corr.rolling(window=2).mean()
+    corr = corr.dropna()
+    corr = corr.to_numpy()
+    peaks, info = find_peaks(corr[:,0], height=2/np.sqrt(len(ts)))
+    peaks = peaks.tolist()
+    if len(peaks) < 2:
+        #print('menos de dois picos')
+        return False
+    comparison = peaks[5]-peaks[4]
+    for i in range(0, len(peaks)-1):
+        if peaks[i+1]-peaks[i] > comparison + 2 or peaks[i+1]-peaks[i] < comparison - 2:
+            count_outside_bounderies +=1
+
+    if count_outside_bounderies > len(ts)*0.05:
+        #print(ts)
+        #print(peaks)
+        #print(comparison)
+        #print(count_outside_bounderies,len(ts)*0.05)
+        #print('passou do numero de tolarancias')
+        return False
+    else:
+        return True
+
 
 
 def isTrended(ts):
