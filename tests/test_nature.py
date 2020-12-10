@@ -9,7 +9,7 @@ lower_bound = 1
 upper_bound = 10
 lower_bound2 = 100
 upper_bound2 = 200
-max_iter = 100
+max_iter = 500
 
 def generate_white_noise():
     datelist = pd.date_range(datetime.today(), periods=1000).tolist()
@@ -19,7 +19,7 @@ def generate_white_noise():
 
 def generate_seasonal():
     k_s = random.randint(lower_bound, upper_bound)
-    k_w = random.randint(lower_bound, 2)
+    k_w = random.randint(lower_bound, 5)
     p = random.randint(lower_bound, upper_bound)
     #print(k_s, k_w, p)
 
@@ -32,7 +32,7 @@ def generate_seasonal():
 
 def generate_trended():
     k_t = random.randint(lower_bound, upper_bound)
-    k_w = random.randint(lower_bound, 2)
+    k_w = random.randint(lower_bound, 5)
     #print(k_t, k_w)
 
     white_noise = generate_white_noise()
@@ -43,7 +43,7 @@ def generate_trended():
 
 def generate_trended2():
     k_t = random.randint(lower_bound, upper_bound)
-    k_w = random.randint(lower_bound, 2)
+    k_w = random.randint(lower_bound, 5)
     #print(k_t, k_w)
 
     white_noise = generate_white_noise()
@@ -57,7 +57,7 @@ def generate_trended2():
 def generate_trend_and_seasonal():
     k_s = random.randint(lower_bound2, upper_bound2)
     k_t = random.randint(lower_bound, upper_bound)
-    k_w = random.randint(lower_bound, 2)
+    k_w = random.randint(lower_bound, 5)
     p = random.randint(lower_bound, upper_bound)
     #print(k_s, k_t, k_w, p)
 
@@ -158,6 +158,7 @@ def test_isTrended():
         seasonal = generate_seasonal()
         if nature.isTrended(seasonal):
             result['error_seasonal']+=1
+        #assert False == nature.isTrended(seasonal)
 
         trend = generate_trended()
         if not nature.isTrended(trend):
@@ -196,6 +197,7 @@ def test_isTrendedAndSeasonal():
         seasonal = generate_seasonal()
         if nature.isTrendedAndSeasonal(seasonal):
             result['error_seasonal']+=1
+        #assert False == nature.isTrendedAndSeasonal(seasonal)
 
         trend = generate_trended()
         if nature.isTrendedAndSeasonal(trend):
