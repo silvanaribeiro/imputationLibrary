@@ -9,7 +9,8 @@ lower_bound = 1
 upper_bound = 10
 lower_bound2 = 100
 upper_bound2 = 200
-max_iter = 500
+upper_bound_white_noise = 2
+max_iter = 100
 
 def generate_white_noise():
     datelist = pd.date_range(datetime.today(), periods=1000).tolist()
@@ -19,7 +20,7 @@ def generate_white_noise():
 
 def generate_seasonal():
     k_s = random.randint(lower_bound, upper_bound)
-    k_w = random.randint(lower_bound, 5)
+    k_w = random.randint(lower_bound, upper_bound_white_noise)
     p = random.randint(lower_bound, upper_bound)
     #print(k_s, k_w, p)
 
@@ -32,7 +33,7 @@ def generate_seasonal():
 
 def generate_trended():
     k_t = random.randint(lower_bound, upper_bound)
-    k_w = random.randint(lower_bound, 5)
+    k_w = random.randint(lower_bound, upper_bound_white_noise)
     #print(k_t, k_w)
 
     white_noise = generate_white_noise()
@@ -43,7 +44,7 @@ def generate_trended():
 
 def generate_trended2():
     k_t = random.randint(lower_bound, upper_bound)
-    k_w = random.randint(lower_bound, 5)
+    k_w = random.randint(lower_bound, upper_bound_white_noise)
     #print(k_t, k_w)
 
     white_noise = generate_white_noise()
@@ -57,7 +58,7 @@ def generate_trended2():
 def generate_trend_and_seasonal():
     k_s = random.randint(lower_bound2, upper_bound2)
     k_t = random.randint(lower_bound, upper_bound)
-    k_w = random.randint(lower_bound, 5)
+    k_w = random.randint(lower_bound, upper_bound_white_noise)
     p = random.randint(lower_bound, upper_bound)
     #print(k_s, k_t, k_w, p)
 
@@ -103,7 +104,7 @@ def test_isWhiteNoise():
     assert result['error_trended']/2<=0.05*max_iter 
     assert result['error_seasonal']<=0.05*max_iter
     assert result['error_trend_and_seasonal']<=0.05*max_iter
-    assert True==False
+    #assert True==False
 
 def test_isSeasonal():
     result = {
@@ -138,7 +139,7 @@ def test_isSeasonal():
     assert result['error_trended']<=0.05*max_iter 
     assert result['error_seasonal']<=0.05*max_iter
     assert result['error_trend_and_seasonal']<=0.05*max_iter
-    assert True==False
+    #assert True==False
 
 
 def test_isTrended():
@@ -177,7 +178,7 @@ def test_isTrended():
     assert result['error_trended']/2<=0.05*max_iter 
     assert result['error_seasonal']<=0.05*max_iter
     assert result['error_trend_and_seasonal']<=0.05*max_iter
-    assert True==False
+    #assert True==False
 
 
 def test_isTrendedAndSeasonal():
@@ -215,4 +216,4 @@ def test_isTrendedAndSeasonal():
     assert result['error_trended']<=0.05*max_iter 
     assert result['error_seasonal']<=0.05*max_iter
     assert result['error_trend_and_seasonal']<=0.05*max_iter
-    assert True==False
+    #assert True==False

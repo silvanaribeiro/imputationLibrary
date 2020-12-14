@@ -33,12 +33,15 @@ def isSeasonal(ts):
     corr = corr.to_numpy()
     peaks, info = find_peaks(corr[:,0], height=2/np.sqrt(len(ts)))
     peaks = peaks.tolist()
+    comparison = 0
     if len(peaks) < 2:
         #print('menos de dois picos')
         return False
-    
-    
-    comparison = peaks[5]-peaks[4]
+    elif len(peaks) >=6:
+        comparison = peaks[5]-peaks[4]
+    else:
+        comparison = peaks[2]-peaks[1]
+
     for i in range(0, len(peaks)-1):
         if peaks[i+1]-peaks[i] > comparison + 2 or peaks[i+1]-peaks[i] < comparison - 2:
             count_outside_bounderies +=1
