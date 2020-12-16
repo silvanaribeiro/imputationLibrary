@@ -66,8 +66,6 @@ def generate_trend_and_seasonal():
 
 
 def test_separate():
-    # Não ta funcionando por causa do index. tem que dar um jeito de colocar o mesmo index pra todo mundo
-    # talvez transformar pra pandas com o index do original??
     df = generate_white_noise()
     df = df.to_frame()
     df = df.join(generate_trend_and_seasonal(), lsuffix='_1', rsuffix='_2')

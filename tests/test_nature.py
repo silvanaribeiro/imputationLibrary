@@ -10,7 +10,7 @@ upper_bound = 10
 lower_bound2 = 100
 upper_bound2 = 200
 upper_bound_white_noise = 2
-max_iter = 100
+max_iter = 50
 
 def generate_white_noise():
     datelist = pd.date_range(datetime.today(), periods=1000).tolist()
@@ -100,10 +100,10 @@ def test_isWhiteNoise():
             result['error_trend_and_seasonal']+=1
 
     print(result)
-    assert result['error_white_noise']<=0.05*max_iter
-    assert result['error_trended']/2<=0.05*max_iter 
-    assert result['error_seasonal']<=0.05*max_iter
-    assert result['error_trend_and_seasonal']<=0.05*max_iter
+    assert result['error_white_noise']<=0.10*max_iter
+    assert result['error_trended']/2<=0.10*max_iter 
+    assert result['error_seasonal']<=0.10*max_iter
+    assert result['error_trend_and_seasonal']<=0.10*max_iter
     #assert True==False
 
 def test_isSeasonal():
@@ -135,10 +135,10 @@ def test_isSeasonal():
             result['error_trend_and_seasonal']+=1
 
     print(result)
-    assert result['error_white_noise']<=0.05*max_iter
-    assert result['error_trended']<=0.05*max_iter 
-    assert result['error_seasonal']<=0.05*max_iter
-    assert result['error_trend_and_seasonal']<=0.05*max_iter
+    assert result['error_white_noise']<=0.10*max_iter
+    assert result['error_trended']<=0.10*max_iter 
+    assert result['error_seasonal']<=0.10*max_iter
+    assert result['error_trend_and_seasonal']<=0.10*max_iter
     #assert True==False
 
 
@@ -174,10 +174,10 @@ def test_isTrended():
             result['error_trend_and_seasonal']+=1
 
     print(result)
-    assert result['error_white_noise']<=0.05*max_iter
-    assert result['error_trended']/2<=0.05*max_iter 
-    assert result['error_seasonal']<=0.05*max_iter
-    assert result['error_trend_and_seasonal']<=0.05*max_iter
+    assert result['error_white_noise']<=0.10*max_iter
+    assert result['error_trended']/2<=0.10*max_iter 
+    assert result['error_seasonal']<=0.10*max_iter
+    assert result['error_trend_and_seasonal']<=0.10*max_iter
     #assert True==False
 
 
@@ -212,8 +212,8 @@ def test_isTrendedAndSeasonal():
             result['error_trend_and_seasonal']+=1
 
     print(result)
-    assert result['error_white_noise']<=0.05*max_iter
-    assert result['error_trended']<=0.05*max_iter 
-    assert result['error_seasonal']<=0.05*max_iter
-    assert result['error_trend_and_seasonal']<=0.05*max_iter
+    assert result['error_white_noise']<=0.10*max_iter
+    assert result['error_trended']<=0.10*max_iter 
+    assert result['error_seasonal']<=0.10*max_iter
+    assert result['error_trend_and_seasonal']<=0.10*max_iter
     #assert True==False
