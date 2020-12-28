@@ -60,6 +60,7 @@ def isSeasonal(ts):
 
 
 def isTrended(ts):
+    ts = ts.fillna(0)
     result = decompose.decompose(ts)
     if result.trend.mean() > 0.19:
         return True
