@@ -8,9 +8,10 @@ def inputData(training_df, sliding_window_size = 0.1):
         if (len(row)-row.count())>=1:
             nan_columns = np.argwhere(np.isnan(row))
             for col in nan_columns[0]:
+                index = imputed_df.index.get_loc(index)
                 rand_row = index
                 window_size = sliding_window_size
-                while(np.isnan(imputed_df.iloc[rand_row, imputed_df.columns.get_loc(col)])):
+                while(np.isnan(imputed_df.iloc[rand_row, col])):
                     lower_bound = max(0, index-math.ceil((imputed_df.shape[0]-1)*window_size))
                     upper_bound = min(index+math.ceil((imputed_df.shape[0]-1)*window_size), training_df.shape[0]-1)
                     rand_row = random.randint(lower_bound, upper_bound)
