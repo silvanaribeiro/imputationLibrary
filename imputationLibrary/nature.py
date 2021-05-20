@@ -8,7 +8,7 @@ import pandas as pd
 import math
 
 def isWhiteNoise(ts):
-    normalized = preprocessing.scale(np.array(ts.fillna(0)))
+    normalized = preprocessing.StandardScaler().fit_transform(np.array(ts.fillna(0)).reshape(-1, 1))
     corr = signal.correlate(normalized, normalized, mode='full')
     corr = corr/len(ts)
     upper_limit = 2/np.sqrt(len(ts))
@@ -24,7 +24,7 @@ def isSeasonal(ts):
         #print('é white noise')
         return False
     
-    normalized = preprocessing.scale(np.array(ts.fillna(0)))
+    normalized = preprocessing.StandardScaler().fit_transform(np.array(ts.fillna(0)).reshape(-1, 1))
     corr = signal.correlate(normalized, normalized, mode='full')
     corr = corr/len(ts)
     corr = pd.DataFrame(corr)
@@ -59,15 +59,15 @@ def isSeasonal(ts):
 
 
 
-def isTrended(ts):
+def isTrended(ts, period):
     ts = ts.fillna(0)
-    result = decompose.decompose(ts)
+    result = decompose.decompose(ts, period)
     if result.trend.mean() > 0.19:
         return True
     return False
 
-def isTrendedAndSeasonal(ts):
-    if not isWhiteNoise(ts) and isTrended(ts) and isSeasonal(ts):
+def isTrendedAndSeasonal(ts, period):
+    if not isWhiteNoise(ts) and isTrended(ts, period) and isSeasonal(ts):
         return True
     return False
 

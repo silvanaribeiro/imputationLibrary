@@ -2,7 +2,7 @@ import pandas as pd
 from imputationLibrary import nature
 import random
 
-def separate(df):
+def separate(df, period = None):
     df_white_noise = pd.DataFrame(index = df.index)
     df_seasonal = pd.DataFrame(index = df.index)
     df_trended = pd.DataFrame(index = df.index)
@@ -10,9 +10,9 @@ def separate(df):
     for col in df.columns:
         if nature.isWhiteNoise(df.loc[:,col]):
             df_white_noise = df_white_noise.join(df.loc[:,col])
-        elif nature.isTrendedAndSeasonal(df.loc[:,col]):
+        elif nature.isTrendedAndSeasonal(df.loc[:,col], period):
             df_trend_and_seasonal = df_trend_and_seasonal.join(df.loc[:,col])
-        elif nature.isTrended(df.loc[:,col]):
+        elif nature.isTrended(df.loc[:,col], period):
             df_trended = df_trended.join(df.loc[:,col])
         elif nature.isSeasonal(df.loc[:,col]):
             df_seasonal = df_seasonal.join(df.loc[:,col])
