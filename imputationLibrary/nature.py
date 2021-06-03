@@ -59,14 +59,14 @@ def isSeasonal(ts):
 
 
 
-def isTrended(ts, period):
+def isTrended(ts, period=None):
     ts = ts.fillna(0)
-    result = decompose.decompose(ts, period)
+    result, _ = decompose.decompose(ts, period)
     if result.trend.mean() > 0.19:
         return True
     return False
 
-def isTrendedAndSeasonal(ts, period):
+def isTrendedAndSeasonal(ts, period=None):
     if not isWhiteNoise(ts) and isTrended(ts, period) and isSeasonal(ts):
         return True
     return False
